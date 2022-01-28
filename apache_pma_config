@@ -1,0 +1,57 @@
+Alias /phpmyadmin /var/www/phpMyAdmin
+
+<Directory /var/www/phpMyAdmin>
+    Options SymLinksIfOwnerMatch
+    DirectoryIndex index.php
+
+    <IfModule mod_php5.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/www/phpMyAdmin/tmp
+        php_admin_value open_basedir //var/www/phpMyAdmin/:/etc/phpmyadmin/:/var/www/phpMyAdmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/var/www/phpMyAdmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+    <IfModule mod_php.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/www/phpMyAdmin/tmp
+        php_admin_value open_basedir /var/www/phpMyAdmin/:/etc/phpmyadmin/:/var/www/phpMyAdmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+
+</Directory>
+
+# Authorize for setup
+<Directory /var/www/phpMyAdmin/setup>
+    <IfModule mod_authz_core.c>
+        <IfModule mod_authn_file.c>
+            AuthType Basic
+            AuthName "phpMyAdmin Setup"
+            AuthUserFile /var/www/phpMyAdmin/htpasswd.setup
+        </IfModule>
+        Require valid-user
+    </IfModule>
+</Directory>
+
+# Disallow web access to directories that don't need it
+<Directory /var/www/phpMyAdmin/templates>
+    Require all denied
+</Directory>
+<Directory /var/www/phpMyAdmin/libraries>
+    Require all denied
+</Directory>
+<Directory /var/www/phpMyAdmin/setup/lib>
+    Require all denied
+</Directory>
