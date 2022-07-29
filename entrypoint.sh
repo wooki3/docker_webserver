@@ -1,4 +1,5 @@
 #!/bin/bash
+bash
 if test -f /first.run; then
 yes n | cp -iR /etc/apache2/. /data/config/apache
 yes n | cp -iR /var/www/. /data/www/
