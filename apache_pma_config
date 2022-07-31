@@ -34,7 +34,7 @@ Alias /phpmyadmin /data/www/phpMyAdmin
 </Directory>
 
 # Authorize for setup
-<Directory /var/www/phpMyAdmin/setup>
+<Directory /data/www/phpMyAdmin/setup>
     <IfModule mod_authz_core.c>
         <IfModule mod_authn_file.c>
             AuthType Basic
